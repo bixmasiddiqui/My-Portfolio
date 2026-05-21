@@ -1,0 +1,372 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ══════════════════════════════════════════════════════════
+   THEME TOKENS — consumed by both dark and light themes
+   ══════════════════════════════════════════════════════════ */
+:root {
+  /* Dark theme (default) */
+  --bg:            #080d1a;
+  --bg-elevated:   rgba(255,255,255,0.03);
+  --text-1:        #f1f5f9;
+  --text-2:        #94a3b8;
+  --text-3:        #475569;
+  --border:        rgba(255,255,255,0.07);
+  --border-hover:  rgba(255,255,255,0.15);
+  --glass-bg:      rgba(255,255,255,0.03);
+  --glass-border:  rgba(255,255,255,0.07);
+  --grid-line:     rgba(255,255,255,0.028);
+  --scrollbar-bg:  #080d1a;
+  --shadow-glass:  0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06);
+  --shadow-card:   0 4px 24px rgba(0,0,0,0.4);
+}
+
+/* Light theme — applied when next-themes adds class="light" to <html> */
+.light {
+  --bg:            #f0f4ff;
+  --bg-elevated:   rgba(255,255,255,0.85);
+  --text-1:        #0f172a;
+  --text-2:        #334155;
+  --text-3:        #64748b;
+  --border:        rgba(0,0,0,0.08);
+  --border-hover:  rgba(0,0,0,0.18);
+  --glass-bg:      rgba(255,255,255,0.72);
+  --glass-border:  rgba(0,0,0,0.07);
+  --grid-line:     rgba(0,0,0,0.055);
+  --scrollbar-bg:  #f0f4ff;
+  --shadow-glass:  0 8px 32px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.95);
+  --shadow-card:   0 4px 20px rgba(0,0,0,0.08);
+}
+
+/* ─── Base ─────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text-1);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+/* ─── Light theme — text & surface overrides ────────────── */
+/* Override hard-coded Tailwind text-slate-* classes in light mode */
+.light .text-slate-50,
+.light .text-slate-100  { color: #0f172a !important; }
+.light .text-slate-200  { color: #1e293b !important; }
+.light .text-slate-300  { color: #334155 !important; }
+.light .text-slate-400  { color: #475569 !important; }
+.light .text-slate-500,
+.light .text-slate-600  { color: #64748b !important; }
+
+/* Section backgrounds */
+.light .bg-\[#080d1a\] { background-color: var(--bg) !important; }
+.light section { background-color: transparent; }
+
+/* Navbar in light mode */
+.light nav,
+.light header { color: #0f172a; }
+
+/* ─── Custom Scrollbar ──────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--scrollbar-bg); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #7c3aed, #06b6d4);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #8b5cf6, #22d3ee);
+}
+
+/* ─── Grid Background ───────────────────────────────────── */
+.bg-grid {
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+.bg-grid-dense {
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+/* ─── Glassmorphism ─────────────────────────────────────── */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  transition: background 0.35s ease, border-color 0.35s ease;
+}
+
+.glass-hover {
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.glass-hover:hover {
+  background: rgba(255, 255, 255, 0.055);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* ─── Gradient Text ─────────────────────────────────────── */
+.gradient-text {
+  background: linear-gradient(135deg, #a78bfa 0%, #22d3ee 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-warm {
+  background: linear-gradient(135deg, #a78bfa 0%, #f472b6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Glow Utilities ────────────────────────────────────── */
+.glow-violet {
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.35),
+              0 0 60px rgba(139, 92, 246, 0.12);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.35),
+              0 0 60px rgba(6, 182, 212, 0.12);
+}
+
+.text-glow-violet {
+  text-shadow: 0 0 30px rgba(139, 92, 246, 0.5),
+               0 0 60px rgba(139, 92, 246, 0.25);
+}
+
+.text-glow-cyan {
+  text-shadow: 0 0 30px rgba(6, 182, 212, 0.5),
+               0 0 60px rgba(6, 182, 212, 0.25);
+}
+
+/* ─── Animated Gradient Button ──────────────────────────── */
+.btn-gradient {
+  background: linear-gradient(135deg, #7c3aed, #06b6d4, #7c3aed);
+  background-size: 200% 200%;
+  animation: gradientShift 4s ease infinite;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(139, 92, 246, 0.4);
+}
+.btn-gradient:active { transform: translateY(0); }
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 100% 50%; }
+}
+
+/* ─── Shimmer sweep (hero buttons) ─────────────────────── */
+@keyframes shimmerSweep {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%); }
+}
+
+/* ─── Glowing Border Card ───────────────────────────────── */
+.glow-border {
+  position: relative;
+}
+.glow-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(139,92,246,0.5), rgba(6,182,212,0.5));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.glow-border:hover::before { opacity: 1; }
+
+/* ─── Section Fade Mask ─────────────────────────────────── */
+.section-fade-bottom {
+  -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+}
+
+/* ─── Timeline ──────────────────────────────────────────── */
+.timeline-line {
+  background: linear-gradient(to bottom, transparent, #7c3aed 20%, #06b6d4 80%, transparent);
+}
+
+/* ─── Skill Bar ─────────────────────────────────────────── */
+.skill-bar {
+  background: linear-gradient(90deg, #7c3aed, #06b6d4);
+  border-radius: 9999px;
+  height: 100%;
+  transform-origin: left;
+}
+
+/* ─── GitHub Contribution Colors ───────────────────────── */
+.contrib-0 { background: rgba(255,255,255,0.04); }
+.contrib-1 { background: rgba(139, 92, 246, 0.25); }
+.contrib-2 { background: rgba(139, 92, 246, 0.50); }
+.contrib-3 { background: rgba(6, 182, 212, 0.55); }
+.contrib-4 { background: rgba(6, 182, 212, 0.90); }
+
+/* ─── Aurora blob entrance ──────────────────────────────── */
+@keyframes auroraIn {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ══════════════════════════════════════════════════════════
+   ACCESSIBILITY
+   ══════════════════════════════════════════════════════════ */
+
+/* Focus-visible ring — visible only on keyboard nav */
+:focus-visible {
+  outline: 2px solid #8b5cf6;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Remove focus ring for mouse users (already have custom cursor) */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* High-contrast focus for buttons in light mode */
+.light :focus-visible {
+  outline-color: #6d28d9;
+}
+
+/* ══════════════════════════════════════════════════════════
+   REDUCED MOTION
+   Respects user system preference — disables all animations
+   ══════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Keep Framer Motion variants but make them instant */
+  .animated-grid-bg { animation: none !important; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   PAGE TRANSITION FADE
+   Sections fade-in on initial page load via this class
+   ══════════════════════════════════════════════════════════ */
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.page-enter {
+  animation: pageFadeIn 0.6s ease 0.3s both;
+}
+
+/* ══════════════════════════════════════════════════════════
+   SECTION REVEAL — clip-path line reveal for headings
+   ══════════════════════════════════════════════════════════ */
+.reveal-clip {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-clip.in-view {
+  clip-path: inset(0 0 0% 0);
+}
+
+/* ══════════════════════════════════════════════════════════
+   HOVER EFFECTS — interactive element enhancements
+   ══════════════════════════════════════════════════════════ */
+
+/* Animated underline for inline links */
+.link-underline {
+  position: relative;
+  text-decoration: none;
+}
+.link-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+.link-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ─── Animated Background Grid ──────────────────────────── */
+/* Drifts diagonally by exactly one cell (72px) so it tiles
+   perfectly. GPU-composited via transform on background-position. */
+.animated-grid-bg {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);
+  background-size: 72px 72px;
+  animation: gridDrift 28s linear infinite;
+  mask-image: radial-gradient(ellipse 100% 100% at 50% 50%, black 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 100% 100% at 50% 50%, black 40%, transparent 100%);
+}
+
+@keyframes gridDrift {
+  0%   { background-position: 0 0; }
+  100% { background-position: 72px 72px; }
+}
+
+@keyframes blobDrift1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(60px, -50px) scale(1.08); }
+  66%       { transform: translate(-30px, 40px) scale(0.94); }
+}
+
+@keyframes blobDrift2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(-60px, 50px) scale(0.94); }
+  66%       { transform: translate(30px, -50px) scale(1.06); }
+}
+
+/* ─── Performance: off-screen sections skip paint ────────── */
+section:not(#hero) {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 600px;
+}
+
+/* ─── Particles canvas override ─────────────────────────── */
+/* Ensure tsParticles canvas fills and doesn't block events  */
+#bg-particles,
+#bg-particles canvas {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: none !important;
+}
